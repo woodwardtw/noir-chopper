@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 function ds_noir_chopper($content){
    // Only run filter on single posts in main query
 
-   if (has_category('Tech Noir') && is_archive()) {      
+   if (has_category('Tech Noir') || has_category('film-noir') && is_archive()) {      
       $content = get_the_excerpt();
       return $content;
    }
