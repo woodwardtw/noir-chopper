@@ -19,8 +19,15 @@ defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 function ds_noir_chopper($content){
    // Only run filter on single posts in main query
 
-   if (has_category('Tech Noir') || has_category('film-noir') && is_archive()) {      
-      $content = get_the_excerpt();
+   if (has_category('Tech Noir') || has_category('tech-noir') && is_archive()) {      
+      preg_match('/<img.+src=[\'"](?P<src>.+?)[\'"].*>/i', $content, $image);
+      if($image){
+         $image = $image[0];
+      } else {
+         $image = '';
+      }
+      $content = $image . get_the_excerpt();
+
       return $content;
    }
    else {
@@ -28,6 +35,5 @@ function ds_noir_chopper($content){
    }
 }
 
-// Add our filter with a later priority (20) to ensure it runs after theme filters
-remove_filter('the_content', 'ds_noir_chopper'); // Remove if exists
+
 add_filter('the_content', 'ds_noir_chopper', 200);
